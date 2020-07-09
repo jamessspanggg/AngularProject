@@ -8,7 +8,7 @@
     fxFlexAlign="start">
 
   <div fxFlex="40">
-    <div fxFlex *ngIf="dish">
+    <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
       <mat-card>
         <mat-card-header>
           <mat-card-title>
@@ -26,17 +26,15 @@
           <button mat-button>SHARE</button>
         </mat-card-actions>
       </mat-card>
-    </div>
   </div>
   <div fxFlex="40"> 
-    <div fxFlex *ngIf="dish">
+    <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
       <mat-list>
         <h3>Comments</h3>
         <mat-list-item *ngFor="let comment of dish.comments" style="margin-bottom: 30px">
           <p>{{comment.comment}}<br>{{comment.rating}} Stars<br>-- {{comment.author}} {{comment.date | date: 'MMM dd, yyyy'}}</p>
         </mat-list-item>
       </mat-list>
-    </div>
   </div>
 
 </div>
