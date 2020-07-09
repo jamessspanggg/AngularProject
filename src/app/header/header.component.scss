@@ -2,6 +2,8 @@ $lt-gray: #ddd;
 $background-dark: #512DA8;
 $background-light: #9575CD;
 $background-pale: #D1C4E9;
+$background-moredark: #4527A0;
+
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
     margin: 0px auto;
@@ -13,4 +15,17 @@ $background-pale: #D1C4E9;
     background: $background-light ;
     color:floralwhite;
     min-height: 150px;
+}
+
+.header {
+  background: $background-dark;
+  color: $lt-gray;
+
+  a {
+    color: white;
+  }
+}
+
+.active {
+    background: $background-moredark;
 }
