@@ -1,0 +1,10 @@
+table {
+  width: 100%;
+}
+
+th, td {
+  overflow: hidden;
+  min-width: calc(100% / 4);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

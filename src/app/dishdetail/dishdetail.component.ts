@@ -4,9 +4,11 @@ import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { OrderService } from '../services/order.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
+import { Order } from '../shared/order';
 import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 @Component({
@@ -33,6 +35,12 @@ export class DishdetailComponent implements OnInit {
 
   commentForm: FormGroup;
   comment: Comment;
+
+  addOrderForm: FormGroup;
+  order: Order;
+  addToOrderQty: number;
+  addOrderSuccessful: boolean;
+
   dishcopy: Dish;
   visibility = 'shown';
 
@@ -53,15 +61,17 @@ export class DishdetailComponent implements OnInit {
     }
   };
 
-  constructor(private dishService: DishService,
+  constructor(private dishService: DishService, private orderService: OrderService,
     private route: ActivatedRoute,
     private location: Location,
     private fb: FormBuilder,
     @Inject('BaseURL') public BaseURL) {
       this.createForm();
+      this.createOrderForm();
     }
 
   ngOnInit() {
+    this.addOrderSuccessful = false;
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
     this.route.params
         .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(params['id']); }))
@@ -87,9 +97,16 @@ export class DishdetailComponent implements OnInit {
     });
 
     this.commentForm.valueChanges
-    .subscribe(data => this.onValueChanged(data));
+      .subscribe(data => this.onValueChanged(data));
 
     this.onValueChanged(); // (re)set validation messages now
+  }
+
+  createOrderForm() {
+    this.addOrderForm = this.fb.group({
+      quantity: 1,
+      tableNumber: 1,
+    })
   }
 
   onValueChanged(data?: any) {
@@ -112,6 +129,7 @@ export class DishdetailComponent implements OnInit {
     }
   }
 
+
   onSubmit() {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
@@ -127,5 +145,16 @@ export class DishdetailComponent implements OnInit {
       comment: '',
       rating: 5
     });
+  }
+
+  addToOrder() {
+    this.order = this.addOrderForm.value;
+    this.order.dishName = this.dish.name;
+    this.orderService.addOrder(this.order).subscribe(order => this.order = order);
+    this.addOrderSuccessful = true;
+    this.addOrderForm.reset({
+      quantity: 1,
+      tableNumber: 1,
+    })
   }
 }

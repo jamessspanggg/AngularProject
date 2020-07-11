@@ -31,43 +31,78 @@
       </mat-card>
   </div>
   <div fxFlex="40" *ngIf="dish" [@flyInOut]="visibility"> 
-    <h3>{{dish.name | uppercase}}</h3>
-      <mat-list>
-        <h3>Comments</h3>
-        <mat-list-item *ngFor="let comment of dish.comments" style="margin-bottom: 30px">
-          <p>{{comment.comment}}<br>{{comment.rating}} Stars<br>-- {{comment.author}} {{comment.date | date: 'MMM dd, yyyy'}}</p>
+    <div fxFlex="60">
+      <h3>{{dish.name | uppercase}}</h3>
+        <mat-list>
+          <h3>Comments</h3>
+          <mat-list-item *ngFor="let comment of dish.comments" style="margin-bottom: 30px">
+            <p>{{comment.comment}}<br>{{comment.rating}} Stars<br>-- {{comment.author}} {{comment.date | date: 'MMM dd, yyyy'}}</p>
+          </mat-list-item>
+          <mat-list-item *ngIf="commentForm.valid">
+            <p matLine>{{commentForm.value.comment}}</p>
+            <p matLine>{{commentForm.value.rating}} Stars</p>
+            <p matLine>-- {{commentForm.value.author}} </p>
         </mat-list-item>
-        <mat-list-item *ngIf="commentForm.valid">
-          <p matLine>{{commentForm.value.comment}}</p>
-          <p matLine>{{commentForm.value.rating}} Stars</p>
-          <p matLine>-- {{commentForm.value.author}} </p>
-      </mat-list-item>
-      </mat-list>
-      <form novalidate [formGroup]="commentForm"  #fform="ngForm"  (ngSubmit)="onSubmit()">
-        <p>
-          <mat-form-field>
-            <input matInput formControlName="author" placeholder="Name" type="text" required>
-            <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
-          </mat-form-field>
-        </p>
-         <p>
-            <mat-slider
-            formControlName="rating"
-            max="5"
-            step="1"
-            thumbLabel
-            tickInterval="1">
-          </mat-slider>
-        </p>
+        </mat-list>
+        <form novalidate [formGroup]="commentForm"  #fform="ngForm"  (ngSubmit)="onSubmit()">
+          <p>
+            <mat-form-field>
+              <input matInput formControlName="author" placeholder="Name" type="text" required>
+              <mat-error *ngIf="formErrors.author">{{formErrors.author}}</mat-error>
+            </mat-form-field>
+          </p>
+          <p>
+              <mat-slider
+              formControlName="rating"
+              max="5"
+              step="1"
+              thumbLabel
+              tickInterval="1">
+            </mat-slider>
+          </p>
 
+          <p>
+            <mat-form-field>
+              <textarea matInput formControlName="comment" placeholder="Comment" type="text" rows="10" cols="40" required></textarea>
+              <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+            </mat-form-field>
+          </p>
+          <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+        </form>
+    </div>
+    <div fxFlex="20">
+      <form novalidate [formGroup]="addOrderForm" #ffrom="ngForm" (ngSubmit)="addToOrder()">
         <p>
-          <mat-form-field>
-            <textarea matInput formControlName="comment" placeholder="Comment" type="text" rows="10" cols="40" required></textarea>
-            <mat-error *ngIf="formErrors.comment">{{formErrors.comment}}</mat-error>
+          <mat-form-field matInput appearance="fill">
+            <mat-label>Quantity:</mat-label>
+            <mat-select formControlName="quantity" disableRipple>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Table Number:</mat-label>
+            <mat-select formControlName="tableNumber" disableRipple>
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+              <mat-option value="8">8</mat-option>
+              <mat-option value="9">9</mat-option>
+              <mat-option value="10">10</mat-option>
+            </mat-select>
           </mat-form-field>
         </p>
-        <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+        <button type="submit" mat-button class="background-primary text-floral-white">Add to Order</button>
       </form>
+      <div *ngIf="addOrderSuccessful">Added order successfully. Please wait for your order.</div>
+    </div>
   </div>
   <div fxFlex *ngIf="errMess">
     <h2>Error</h2>

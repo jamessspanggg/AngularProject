@@ -9,6 +9,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DishService } from './services/dish.service';
+import { OrderService } from './services/order.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
 import { FeedbackService } from './services/feedback.service';
@@ -20,6 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
@@ -37,6 +39,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { baseURL } from './shared/baseurl';
 import { HighlightDirective } from './directives/highlight.directive';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,8 @@ import { HighlightDirective } from './directives/highlight.directive';
     HomeComponent,
     ContactComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,9 +76,10 @@ import { HighlightDirective } from './directives/highlight.directive';
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
+    MatTableModule,
     AppRoutingModule,
   ],
-  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService, FeedbackService, {provide: 'BaseURL', useValue: baseURL}],
+  providers: [DishService, OrderService, PromotionService, LeaderService, ProcessHTTPMsgService, FeedbackService, {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent],
   // To make this component be opened from another component, you need to declare this as an EntryComponent in the AppModule
   entryComponents: [
