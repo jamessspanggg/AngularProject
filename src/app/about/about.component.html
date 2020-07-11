@@ -58,7 +58,7 @@
     <h2>Corporate Leadership</h2>
     <mat-grid-list cols="1" rowHeight="100px">
       <mat-grid-tile *ngFor="let leader of leaders">
-        <img style="border-radius: 50%; margin-right: 10px;" width="40px" src={{leader.image}} alt={{leader.name}}>
+        <img style="border-radius: 50%; margin-right: 10px;" width="40px" src="{{BaseURL + leader.image}}" alt={{leader.name}}>
         <div>
           <div>
             {{ leader.name }}
@@ -79,5 +79,9 @@
         </div>
       </mat-grid-tile>
     </mat-grid-list>
+  </div>
+  <div fxFlex *ngIf="leaderErrMess">
+    <h2>Error</h2>
+    <h4>{{leaderErrMess}}</h4>
   </div>
 </div>

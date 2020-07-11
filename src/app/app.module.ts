@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { FeedbackService } from './services/feedback.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -73,7 +74,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     MatDialogModule,
     AppRoutingModule,
   ],
-  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService, {provide: 'BaseURL', useValue: baseURL}],
+  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService, FeedbackService, {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent],
   // To make this component be opened from another component, you need to declare this as an EntryComponent in the AppModule
   entryComponents: [
